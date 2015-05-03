@@ -16,4 +16,13 @@ angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
+  app.controller('tabSetup', function() {
+  $http.get('../JSON/buildingblocks.json')
+    .success(function(data, status) {
+            this.tabMenu = data;
+        }.bind(this))
+        .error(function(data, status) {
+            alert("FAILED TO GET");
+        });
+  });
 })
