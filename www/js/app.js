@@ -18,10 +18,10 @@ angular.module('starter', ['ionic'])
   });
   app.controller('tabSetup', function() {
   $http.get('../JSON/buildingblocks.json')
-    .success(function(data, status) {
+    .success(function(data) {
             this.tabMenu = data;
         }.bind(this))
-        .error(function(data, status) {
+        .error(function(data) {
             alert("FAILED TO GET");
         });
   });
