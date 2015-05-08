@@ -16,13 +16,14 @@ var app = angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
-  app.controller('tabSetup', function() {
-  $http.get('../JSON/buildingblocks.json')
-    .success(function(data) {
-            this.tabMenu = data;
-        }.bind(this))
-        .error(function(data) {
-            alert("FAILED TO GET");
-        });
+});
+
+app.controller('tabSetup', function($http) {
+$http.get('JSON/buildingBlocks.json')
+  .success(function(data) {
+      this.tabMenu = data;
+  }.bind(this))
+  .error(function(data) {
+      alert("FAILED TO GET");
   });
-})
+});
