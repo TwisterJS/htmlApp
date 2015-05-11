@@ -17,30 +17,34 @@
   },
   {
     "name": "<head>",
-    "definition": ""
+    "definition": "The <head> tag is used before the <body> tag, and contains the <title> tag. The items contained in the <head> tag are not seen in the contents of the HTML page."
   },
   {
     "name": "<html>",
-    "definition": ""
+    "definition": "The <html> tag is the first tag you use on the page. All of the other html you place on the page will be placed within the <html> tag, including the <title> tag."
   },
   {
     "name": "<img src>",
-    "definition": ""
+    "definition": "The <img src> tag is what allows an image to be displayed on the page. You must include the file path where the image is located."
   },
   {
     "name": "<li>",
-    "definition": ""
+    "definition": "The <li> tag is used for lists. The <li> tag is used for each individual list item."
   },
   {
     "name": "Nesting tags",
-    "definition": ""
+    "definition": "Nesting tags means that the first tag that you open will be the last tag you close. If you do not properly nest your tags, the page will not look the way it is supposed to."
   },
   {
     "name": "<p>",
-    "definition": ""
+    "definition": "The <p> tag is used for paragraphs."
   },
   {
+    "name": "<ol>",
+    "definition": "The <ol> tag is used for an ordered list, meaning there will be numbers next to each item on your list."
+  }
+  {
     "name": "<ul>",
-    "definition": ""
+    "definition": "The <ul> tag"
   }
 ]
