@@ -45,6 +45,6 @@
   }
   {
     "name": "<ul>",
-    "definition": "The <ul> tag"
+    "definition": "The <ul> tag is used for an unordered list, meaning there will not be numbers next to each item on your list."
   }
 ]
