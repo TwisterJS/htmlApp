@@ -1,23 +1,19 @@
 [
   {
     "name": "<a href>",
-    "definition": ""
+    "definition": "Links are created using the <a> tag. A link is what moves the user to a new page. The href is the reference which tells the browser which page to go to."
   },
   {
     "name": "<body>",
-    "definition": ""
+    "definition": "The <body> tag is what contains all of the HTML that the user actually sees."
   },
   {
     "name": "<div>",
-    "definition": ""
-  },
-  {
-    "name": "<footer>",
-    "definition": ""
+    "definition": "The <div> tag is used for grouping sections of information and helping to format your HTML."
   },
   {
     "name": "<H1>, <H2>, <H3>, <H4>, <H5>, <H6>",
-    "definition": ""
+    "definition": "The H-tags are used for headlines for your sections. <h1> is the largest, while <h6> is the smallest."
   },
   {
     "name": "<head>",
