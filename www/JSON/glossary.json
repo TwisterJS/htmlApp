@@ -12,7 +12,7 @@
     "definition": "The <div> tag is used for grouping sections of information and helping to format your HTML."
   },
   {
-    "name": "<H1>, <H2>, <H3>, <H4>, <H5>, <H6>",
+    "name": "<h1>, <h2>, <h3>, <h4>, <h5>, <h6>",
     "definition": "The H-tags are used for headlines for your sections. <h1> is the largest, while <h6> is the smallest."
   },
   {
@@ -42,7 +42,7 @@
   {
     "name": "<ol>",
     "definition": "The <ol> tag is used for an ordered list, meaning there will be numbers next to each item on your list."
-  }
+  },
   {
     "name": "<ul>",
     "definition": "The <ul> tag is used for an unordered list, meaning there will not be numbers next to each item on your list."
