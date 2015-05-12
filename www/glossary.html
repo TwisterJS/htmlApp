@@ -28,8 +28,10 @@
         </ion-header-bar>
         <ion-content ng-controller="glossaryCtrl as glossary">
             <ion-list ng-repeat="item in glossary.gList">
-                <ion-item>{{item.name}}<ion-item>
-                    <ion-item>{{item.definition}}</ion-item>
+                <ion-item>
+                <h2><a ng-click="showMe = !showMe || false" href="">{{item.name}}</a></h2>
+                <div ng-show="showMe">{{item.definition}}</div>
+                </ion-item>
             </ion-list>
         </ion-content>
     </ion-pane>
