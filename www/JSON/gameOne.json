@@ -1,23 +1,27 @@
 [
     {
-        "question": "Oh no! Bianca Bug has scrambled our instructions! Can you help us fix the HTML so we can tell you how to stop Bianca Bug?",
+        "question": "Oh no! Bianca Bug has scrambled our instructions! Can you help us fix the HTML so we can tell you how to stop Bianca Bug? Tell us which tags are missing below!",
         "answer": "yes",
-        "wrongAnswer": "no"
+        "hint": "Are you sure you won't help us?"
     },
     {
         "question": "HELP!</h1>",
-        "answer": "<h1>"
+        "answer": "<h1>",
+        "hint": "Did you forget your brackets?"
     },
     {
         "question": "<p>Bianca Bug has stolen our next app, and we need your help to get it back!",
-        "answer": "</p>"
+        "answer": "</p>",
+        "hint": "Don't forget that closing brackets have some extra."
     },
     {
         "question": "Here is a picture of Bianca Bug, so you'll know who to look for. <src = ''>",
-        "answer": "img"
+        "answer": "img",
+        "hint": "There are already brackets there. What are we missing inside the brackets?"
     },
     {
         "question": "Once you catch her, bring us back the app, and we'll give you a reward!</p>",
-        "answer": "<p>"
+        "answer": "<p>",
+        "hint": "Did you forget your brackets?"
     }
 ]
