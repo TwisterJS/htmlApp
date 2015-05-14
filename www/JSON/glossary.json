@@ -1,0 +1,58 @@
+[
+  {
+    "name": "<a href>",
+    "definition": "Links are created using the <a> tag. A link is what moves the user to a new page. The href is the reference which tells the browser which page to go to."
+  },
+  {
+    "name": "<body>",
+    "definition": "The <body> tag is what contains all of the HTML that the user actually sees."
+  },
+  {
+    "name": "Browser",
+    "definition": "A browser is what your computer uses to show you the internet."
+},
+  {
+    "name": "<div>",
+    "definition": "The <div> tag is used for grouping sections of information and helping to format your HTML."
+  },
+  {
+    "name": "<h1>, <h2>, <h3>, <h4>, <h5>, <h6>",
+    "definition": "The H-tags are used for headlines for your sections. <h1> is the largest, while <h6> is the smallest."
+  },
+  {
+    "name": "<head>",
+    "definition": "The <head> tag is used before the <body> tag, and contains the <title> tag. The items contained in the <head> tag are not seen in the contents of the HTML page."
+  },
+  {
+    "name": "<html>",
+    "definition": "The <html> tag is the first tag you use on the page. All of the other html you place on the page will be placed within the <html> tag, including the <title> tag."
+  },
+  {
+    "name": "<img src>",
+    "definition": "The <img src> tag is what allows an image to be displayed on the page. You must include the file path where the image is located."
+  },
+  {
+    "name": "<li>",
+    "definition": "The <li> tag is used for lists. The <li> tag is used for each individual list item."
+  },
+  {
+    "name": "Nesting tags",
+    "definition": "Nesting tags means that the first tag that you open will be the last tag you close. If you do not properly nest your tags, the page will not look the way it is supposed to."
+  },
+  {
+    "name": "<p>",
+    "definition": "The <p> tag is used for paragraphs."
+  },
+  {
+    "name": "<ol>",
+    "definition": "The <ol> tag is used for an ordered list, meaning there will be numbers next to each item on your list."
+  },
+  {
+    "name": "Render",
+    "definition": "When a page is 'rendered' it means that the computer is done with what it needs to do with the page, and it is showing the finished product on your screen."
+  },
+  {
+    "name": "<ul>",
+    "definition": "The <ul> tag is used for an unordered list, meaning there will not be numbers next to each item on your list."
+  }
+]

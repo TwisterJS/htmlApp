@@ -16,4 +16,38 @@ angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
+<<<<<<< Updated upstream
 })
+=======
+});
+
+app.controller('tabSetup', function($http) {
+$http.get('JSON/buildingBlocks.json')
+  .success(function(data) {
+      this.tabMenu = data;
+  }.bind(this))
+  .error(function(data) {
+      alert("FAILED TO GET");
+  });
+});
+
+app.controller('glossaryCtrl', function($http) {
+$http.get('JSON/glossary.json')
+  .success(function(data) {
+      this.gList = data;
+  }.bind(this))
+  .error(function(data) {
+      alert("FAILED TO GET");
+  });
+});
+
+app.controller('gameOneCtrl', function($http) {
+$http.get('JSON/gameOne.json')
+  .success(function(data) {
+      this.gameQuestions = data;
+  }.bind(this))
+  .error(function(data) {
+      alert("FAILED TO GET");
+  });
+});
+>>>>>>> Stashed changes
