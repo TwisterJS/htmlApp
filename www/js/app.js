@@ -27,3 +27,13 @@ $http.get('JSON/buildingBlocks.json')
       alert("FAILED TO GET");
   });
 });
+
+app.controller('glossaryCtrl', function($http) {
+$http.get('JSON/glossary.json')
+  .success(function(data) {
+      this.gList = data;
+  }.bind(this))
+  .error(function(data) {
+      alert("FAILED TO GET");
+  });
+});

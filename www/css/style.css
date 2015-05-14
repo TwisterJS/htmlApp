@@ -1,1 +1,9 @@
 /* Empty. Add your own CSS if you like */
+
+/* Maintains the glossary page */
+.glossaryTabs {
+    color: #444;
+}
+.glossaryDefinition {
+    margin-top: 15px;
+}
