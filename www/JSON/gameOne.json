@@ -12,7 +12,7 @@
     {
         "question": "<p>Bianca Bug has stolen our next app, and we need your help to get it back!",
         "answer": "</p>",
-        "hint": "Don't forget that closing brackets have some extra."
+        "hint": "Don't forget that closing brackets have something extra."
     },
     {
         "question": "Here is a picture of Bianca Bug, so you'll know who to look for. <src = ''>",
