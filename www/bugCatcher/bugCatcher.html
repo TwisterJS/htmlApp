@@ -27,7 +27,8 @@ function preload()
 	game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 }
 
-var platforms;
+var stars;
+var badStars;
 
 function create()
 {
@@ -52,7 +53,7 @@ function create()
 	game.physics.arcade.enable(player);
 	
 	//player.body.bounce.y = 0.2;
-	//player.body.gravity.y = 300;
+	player.body.gravity.y = 200;
 	player.body.collideWorldBounds = true;
 	
 	player.animations.add('left', [0], 10, true);
@@ -65,38 +66,31 @@ function create()
 	stars.enableBody = true;
 	badStars.enableBody = true;
 	
-	for (var i = 0; i < 60; i++)
+	var goodStar = stars.create(Math.random() * 800, Math.random() * -10000, 'star');
+	
+	goodStar.body.velocity.y = 200;
+	
+	goodStar.events.onOutOfBounds.add( collectStar, this );
+	
+	for (var i = 0; i < 100; i++)
 	{
 		var comparer = Math.random();
 		
-		var loc =  -8000 / (Math.random() * 100 * Math.random());
+		var loc = -10000 * Math.random();
 		
 		if(loc > -100)
 		{
 			loc = loc / Math.random();
 		}
 		
-		var star = comparer > .2 ? stars.create(Math.random() * 800, loc, 'star') : badStars.create(Math.random() * 800, loc, 'badStar');
+		var star = badStars.create(Math.random() * 800, loc, 'badStar');
 		
 		if ( comparer <= .2)
 		{
 			star.body.bounce.y = 0.4;
-			star.body.immovable = true;
 		}
 		
-		//if(comparer > .7)
-		//{
-		//	star = stars.create(Math.random() * 800, loc, 'star');
-		//	
-		//}
-		//else
-		//{
-		//	star = badStars.create(Math.random() * 800, loc, 'badStar');
-		//}
-		
-		//(Math.random() * -800) + 800
-		
-		//star.body.gravity.y = 20;
+		star.body.velocity.y = 200;
 		
 		star.body.bounce.y = 0.7 + Math.random() * 0.2;
 	}
@@ -107,6 +101,8 @@ function update()
 	game.physics.arcade.collide(player, badStars);
 	
 	cursors = game.input.keyboard.createCursorKeys();
+	
+	
 	
 	player.body.velocity.x = 0;
 	
@@ -131,13 +127,13 @@ function update()
 	else
 	{
 		player.animations.stop();
-		player.body.velocity.x = player.body.velocity.y = 0;
+		//player.body.velocity.x = player.body.velocity.y = 0;
 		player.frame = 4;
 	}
 	
 	
 	
-	game.physics.arcade.collide(stars, platforms);
+	//game.physics.arcade.collide(stars, platforms);
 	
 	game.physics.arcade.overlap(player, stars, collectStar, null, this);
 	
@@ -148,6 +144,35 @@ function update()
 function collectStar (player, star)
 {
 	star.kill();
+	var goodStar = stars.create(Math.random() * 800, Math.random() * -10000, 'star');
+	
+	goodStar.body.velocity.y = 200;
+	
+	goodStar.events.onOutOfBounds.add( collectStar, this );
+	
+	for (var i = 0; i < 100; i++)
+	{
+		var comparer = Math.random();
+		
+		var loc = -10000 * Math.random();
+		
+		if(loc > -100)
+		{
+			loc = loc / Math.random();
+		}
+		
+		var star = badStars.create(Math.random() * 800, loc, 'badStar');
+		
+		if ( comparer <= .2)
+		{
+			star.body.bounce.y = 0.4;
+		}
+		
+		star.body.velocity.y = 200;
+		
+		star.body.bounce.y = 0.7 + Math.random() * 0.2;
+	}
+	
 }
 
 function dieNow (player, star)
