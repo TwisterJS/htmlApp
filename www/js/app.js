@@ -38,7 +38,7 @@ $http.get('JSON/glossary.json')
   });
 });
 
-app.controller('gameOneCtrl', function($http, $ionicPopup) {
+app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
 $http.get('JSON/gameOne.json')
   .success(function(data) {
       this.gameQuestions = data;
@@ -46,20 +46,30 @@ $http.get('JSON/gameOne.json')
   .error(function(data) {
       alert("FAILED TO GET");
   });
-  this.showPopup = function () {
-      this.data = {}
+
+  $scope.showPopup = function () {
+      $scope.data = {}
 
       var myPopup = $ionicPopup.show({
           template: '<input type="text">',
           title: 'Type in the missing tab.',
           buttons: [
+              { text: 'Cancel' },
               {
                   text: 'Submit',
-                  type: 'button-positive'
-              },
-              { text: 'Cancel' }
+                  type: 'button-positive',
+                  onTap: function(e) {
+                      if(e === data.answer) {
+                          console.log("Show the next question!");
+                      } else {
+                          console.log("Do not show the next question");
+                      }
+                  }
+              }
           ]
       });
-  }
-
+      myPopup.then(function(res) {
+          console.log(res);
+      });
+  };
 });
