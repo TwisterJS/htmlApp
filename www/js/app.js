@@ -38,7 +38,7 @@ $http.get('JSON/glossary.json')
   });
 });
 
-app.controller('gameOneCtrl', function($http) {
+app.controller('gameOneCtrl', function($http, $ionicPopup) {
 $http.get('JSON/gameOne.json')
   .success(function(data) {
       this.gameQuestions = data;
@@ -46,4 +46,20 @@ $http.get('JSON/gameOne.json')
   .error(function(data) {
       alert("FAILED TO GET");
   });
+  this.showPopup = function () {
+      this.data = {}
+
+      var myPopup = $ionicPopup.show({
+          template: '<input type="text">',
+          title: 'Type in the missing tab.',
+          buttons: [
+              {
+                  text: 'Submit',
+                  type: 'button-positive'
+              },
+              { text: 'Cancel' }
+          ]
+      });
+  }
+
 });

@@ -26,20 +26,29 @@
       <ion-header-bar class="bar-stable">
         <h1 class="title">TwisterJS: HTML for Beginners</h1>
       </ion-header-bar>
-
       <ion-content>
         <div ng-controller="gameOneCtrl as gameCtrl">
+
           <p>{{gameCtrl.gameQuestions[0].question}}</p>
+          <div class="button-bar">
+              <button class="button button-light">{{gameCtrl.gameQuestions[0].answer}}</button>
+              <button class="button button-light">{{gameCtrl.gameQuestions[0].wrongAnswer}}</button>
+          </div>
+
           <p>{{gameCtrl.gameQuestions[1].question}}</p>
+          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[1].button}}</button>
+
           <p>{{gameCtrl.gameQuestions[2].question}}</p>
+          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[2].button}}</button>
+
           <p>{{gameCtrl.gameQuestions[3].question}}</p>
+          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[3].button}}</button>
+
           <p>{{gameCtrl.gameQuestions[4].question}}</p>
-          <!-- <div ng-repeat="question in gameCtrl.gameQuestions">
-              <p>{{question.question}}</p>
-          </div> -->
+          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[4].button}}</button>
+
         </div>
       </ion-content>
-
     </ion-pane>
   </body>
 </html>
