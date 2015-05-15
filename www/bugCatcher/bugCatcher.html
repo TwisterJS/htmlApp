@@ -1,0 +1,165 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>PhaserGame</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+var numHits = 0;
+
+function preload()
+{
+	game.load.image('sky', 'assets/sky.png');
+	game.load.image('ground', 'assets/platform.png');
+	game.load.image('star', 'assets/star.png');
+	game.load.image('badStar', 'assets/star2.png');
+	game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+}
+
+var platforms;
+
+function create()
+{
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+	
+	game.add.sprite( 0, 0, 'sky');
+	//platforms = game.add.group();
+	//platforms.enableBody = true;
+	
+	//var ground = platforms.create(0, game.world.height - 64, 'ground');
+	
+	//ground.scale.setTo(2,2);
+	//ground.body.immovable = true;
+	//var ledge = platforms.create(400, 400, 'ground');
+	//ledge.body.immovable = true;
+	
+	//ledge = platforms.create(-250, 250, 'ground');
+	//ledge.body.immovable = true;
+	
+	player = game.add.sprite(400, game.world.height - 80, 'dude');
+	
+	game.physics.arcade.enable(player);
+	
+	//player.body.bounce.y = 0.2;
+	//player.body.gravity.y = 300;
+	player.body.collideWorldBounds = true;
+	
+	player.animations.add('left', [0], 10, true);
+	player.animations.add('right', [7], 10, true);
+	player.animations.add('hit', [1, 6], 10, true);
+	
+	stars = game.add.group();
+	badStars = game.add.group();
+	
+	stars.enableBody = true;
+	badStars.enableBody = true;
+	
+	for (var i = 0; i < 60; i++)
+	{
+		var comparer = Math.random();
+		
+		var loc =  -8000 / (Math.random() * 100 * Math.random());
+		
+		if(loc > -100)
+		{
+			loc = loc / Math.random();
+		}
+		
+		var star = comparer > .2 ? stars.create(Math.random() * 800, loc, 'star') : badStars.create(Math.random() * 800, loc, 'badStar');
+		
+		if ( comparer <= .2)
+		{
+			star.body.bounce.y = 0.4;
+			star.body.immovable = true;
+		}
+		
+		//if(comparer > .7)
+		//{
+		//	star = stars.create(Math.random() * 800, loc, 'star');
+		//	
+		//}
+		//else
+		//{
+		//	star = badStars.create(Math.random() * 800, loc, 'badStar');
+		//}
+		
+		//(Math.random() * -800) + 800
+		
+		//star.body.gravity.y = 20;
+		
+		star.body.bounce.y = 0.7 + Math.random() * 0.2;
+	}
+}
+
+function update()
+{
+	game.physics.arcade.collide(player, badStars);
+	
+	cursors = game.input.keyboard.createCursorKeys();
+	
+	player.body.velocity.x = 0;
+	
+	if(cursors.left.isDown)
+	{
+		player.body.velocity.x = -250;
+		player.animations.play('left');
+	}
+	else if(cursors.right.isDown)
+	{
+		player.body.velocity.x = 250;
+		player.animations.play('right');
+	}
+	else if(cursors.up.isDown)
+	{
+		player.body.velocity.y = -200;
+	} 
+	else if(cursors.down.isDown)
+	{
+		player.body.velocity.y = 200;
+	}
+	else
+	{
+		player.animations.stop();
+		player.body.velocity.x = player.body.velocity.y = 0;
+		player.frame = 4;
+	}
+	
+	
+	
+	game.physics.arcade.collide(stars, platforms);
+	
+	game.physics.arcade.overlap(player, stars, collectStar, null, this);
+	
+	game.physics.arcade.overlap(player, badStars, dieNow, null, this);
+	
+}
+
+function collectStar (player, star)
+{
+	star.kill();
+}
+
+function dieNow (player, star)
+{
+	//if(numHits > 3)
+	{
+		player.animations.play('hit');
+	}
+	
+}
+
+</script>
+
+</body>
+</html>
