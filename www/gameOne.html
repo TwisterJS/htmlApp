@@ -27,10 +27,17 @@
         <h1 class="title">TwisterJS: HTML for Beginners</h1>
       </ion-header-bar>
 
-      <ion-content ng-controller="gameOneCtrl as gameCtrl">
-          <div ng-repeat="question in gameCtrl.gameQuestions">
+      <ion-content>
+        <div ng-controller="gameOneCtrl as gameCtrl">
+          <p>{{gameCtrl.gameQuestions[0].question}}</p>
+          <p>{{gameCtrl.gameQuestions[1].question}}</p>
+          <p>{{gameCtrl.gameQuestions[2].question}}</p>
+          <p>{{gameCtrl.gameQuestions[3].question}}</p>
+          <p>{{gameCtrl.gameQuestions[4].question}}</p>
+          <!-- <div ng-repeat="question in gameCtrl.gameQuestions">
               <p>{{question.question}}</p>
-          </div>
+          </div> -->
+        </div>
       </ion-content>
 
     </ion-pane>
