@@ -1,0 +1,26 @@
+.midArea{
+	position: absolute;
+	height: 100%;
+	text-align: center;
+}
+
+.midDiv{
+	border: 0;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.topDiv{
+	position: absolute;
+	top: 10%;
+	margin: auto;
+}
+
+.bottomDiv{
+	position: absolute;
+	bottom: 0;
+}

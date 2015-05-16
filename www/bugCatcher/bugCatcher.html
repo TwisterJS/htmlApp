@@ -4,61 +4,71 @@
 	<meta charset="UTF-8" />
 	<title>PhaserGame</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
-    <style type="text/css">
-        body {
-            margin: 0;
-        }
-    </style>
-</head>
+    <link href="style.css" rel="stylesheet">
 <body>
 
 <script type="text/javascript">
+//Building Blocks
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'midDiv', { preload: preload, create: create, update: update });
+var stars;
+var badStars;
+var platforms;
+var ground;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
-var numHits = 0;
+//Variables
+var currentScore = 1;
+var numRounds = 5;
+var numLives = 3;
+var currentSpeed = 100;
+
+var tags = ["&lt;HTML&gt;", "&lt;/HTML&gt;", "&lt;HEAD&gt;", "&lt;/HEAD&gt;", "&lt;BODY&gt;", "&lt;/BODY&gt;", "&lt;P&gt;", "&lt;/P&gt;"];
 
 function preload()
 {
-	game.load.image('sky', 'assets/sky.png');
+	//Load the World
+	game.load.image('sky', 'assets/sky_stars.png');
 	game.load.image('ground', 'assets/platform.png');
-	game.load.image('star', 'assets/star.png');
-	game.load.image('badStar', 'assets/star2.png');
+	
+	//Load the targets
+	game.load.image('img0', 'assets/html.c.png');
+	game.load.image('img1', 'assets/html.png');
+	game.load.image('img2', 'assets/head.c.png');
+	game.load.image('img3', 'assets/head.png');
+	game.load.image('img4', 'assets/body.c.png');
+	game.load.image('img5', 'assets/body.png');
+	game.load.image('img6', 'assets/p.c.png');
+	game.load.image('img7', 'assets/p.png');
+	
+	//Load the character
 	game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 }
 
-var stars;
-var badStars;
 
+//Create the game
 function create()
 {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
 	game.add.sprite( 0, 0, 'sky');
-	//platforms = game.add.group();
-	//platforms.enableBody = true;
+	platforms = game.add.group();
+	platforms.enableBody = true;
 	
-	//var ground = platforms.create(0, game.world.height - 64, 'ground');
+	ground = platforms.create(0, game.world.height + 10, 'ground');
 	
-	//ground.scale.setTo(2,2);
-	//ground.body.immovable = true;
-	//var ledge = platforms.create(400, 400, 'ground');
-	//ledge.body.immovable = true;
-	
-	//ledge = platforms.create(-250, 250, 'ground');
-	//ledge.body.immovable = true;
+	ground.scale.setTo(2,2);
+	ground.body.immovable = true;
 	
 	player = game.add.sprite(400, game.world.height - 80, 'dude');
 	
 	game.physics.arcade.enable(player);
 	
-	//player.body.bounce.y = 0.2;
 	player.body.gravity.y = 200;
 	player.body.collideWorldBounds = true;
 	
 	player.animations.add('left', [0], 10, true);
 	player.animations.add('right', [7], 10, true);
-	player.animations.add('hit', [1, 6], 10, true);
+	player.animations.add('hit', [2,7, 2,7, 2,7, 2,7, 2,7, 2,7, 4], 2, true);
 	
 	stars = game.add.group();
 	badStars = game.add.group();
@@ -66,39 +76,11 @@ function create()
 	stars.enableBody = true;
 	badStars.enableBody = true;
 	
-	var goodStar = stars.create(Math.random() * 800, Math.random() * -10000, 'star');
-	
-	goodStar.body.velocity.y = 200;
-	
-	goodStar.events.onOutOfBounds.add( collectStar, this );
-	
-	for (var i = 0; i < 100; i++)
-	{
-		var comparer = Math.random();
-		
-		var loc = -10000 * Math.random();
-		
-		if(loc > -100)
-		{
-			loc = loc / Math.random();
-		}
-		
-		var star = badStars.create(Math.random() * 800, loc, 'badStar');
-		
-		if ( comparer <= .2)
-		{
-			star.body.bounce.y = 0.4;
-		}
-		
-		star.body.velocity.y = 200;
-		
-		star.body.bounce.y = 0.7 + Math.random() * 0.2;
-	}
+	makeStars(getNum());
 }
 
 function update()
 {
-	game.physics.arcade.collide(player, badStars);
 	
 	cursors = game.input.keyboard.createCursorKeys();
 	
@@ -108,35 +90,36 @@ function update()
 	
 	if(cursors.left.isDown)
 	{
-		player.body.velocity.x = -250;
+		player.body.velocity.x = -50 - currentSpeed;
 		player.animations.play('left');
 	}
 	else if(cursors.right.isDown)
 	{
-		player.body.velocity.x = 250;
+		player.body.velocity.x = 50 + currentSpeed;
 		player.animations.play('right');
 	}
 	else if(cursors.up.isDown)
 	{
-		player.body.velocity.y = -200;
+		player.body.velocity.y = -50 - currentSpeed;
 	} 
 	else if(cursors.down.isDown)
 	{
-		player.body.velocity.y = 200;
+		player.body.velocity.y = 50 + currentSpeed;
 	}
 	else
 	{
-		player.animations.stop();
-		//player.body.velocity.x = player.body.velocity.y = 0;
-		player.frame = 4;
+		if(!player.animations.getAnimation('hit').isPlaying)
+		{
+			player.frame = 4;
+		}
+	}
+	if(currentScore <= numRounds && numLives > 0)
+	{
+		display("Level: " + currentScore + " | Lives Remaining: " + numLives);
 	}
 	
-	
-	
-	//game.physics.arcade.collide(stars, platforms);
-	
 	game.physics.arcade.overlap(player, stars, collectStar, null, this);
-	
+	game.physics.arcade.overlap(ground, stars, collectStar, null, this);
 	game.physics.arcade.overlap(player, badStars, dieNow, null, this);
 	
 }
@@ -144,47 +127,141 @@ function update()
 function collectStar (player, star)
 {
 	star.kill();
-	var goodStar = stars.create(Math.random() * 800, Math.random() * -10000, 'star');
 	
-	goodStar.body.velocity.y = 200;
+	currentScore++;
+	
+	badStars.forEachAlive(killEmAll, this);
+	
+	if(currentScore <= numRounds)
+	{
+	
+		currentSpeed += 50;
+		
+		makeStars(getNum());
+		numLives++;
+	}
+	else
+	{
+		display("You Win!!!");
+	}
+	
+}
+
+function getNum()
+{
+	return Math.round(Math.random() * 8);
+}
+
+function makeStars(tag)
+{
+	
+	var goodStar = stars.create((Math.random() * 700) + 50, Math.random() * -5000, 'img' + tag);
+		
+	goodStar.body.velocity.y = currentSpeed;
 	
 	goodStar.events.onOutOfBounds.add( collectStar, this );
 	
-	for (var i = 0; i < 100; i++)
+	for (var i = 0; i < 60; i++)
 	{
+	
+		var arrNum = 9;
+		
+		while (arrNum <=0 || arrNum >= 8 || arrNum == tag)
+		{
+			arrNum = getNum();
+		}
+		
+		request(tags[tag]);
+	
 		var comparer = Math.random();
 		
-		var loc = -10000 * Math.random();
+		var loc = -5000 * Math.random();
 		
 		if(loc > -100)
 		{
 			loc = loc / Math.random();
 		}
 		
-		var star = badStars.create(Math.random() * 800, loc, 'badStar');
+		display(arrNum);
+		
+		var star = badStars.create((Math.random() * 700) + 50, loc, 'img' + arrNum);
 		
 		if ( comparer <= .2)
 		{
 			star.body.bounce.y = 0.4;
 		}
 		
-		star.body.velocity.y = 200;
+		star.body.velocity.y = currentSpeed;
 		
 		star.body.bounce.y = 0.7 + Math.random() * 0.2;
 	}
-	
+}
+
+function killEmAll(star)
+{
+	star.kill();
 }
 
 function dieNow (player, star)
 {
-	//if(numHits > 3)
-	{
-		player.animations.play('hit');
-	}
+	star.kill();
 	
+	if(numLives <= 0)
+	{
+		badStars.forEachAlive(killEmAll, this);
+		stars.forEachAlive(killEmAll, this);
+		player.body.velocity.x = 0;
+		player.body.velocity.y = 0;
+		player.body.gravity.x = 0;
+		player.body.gravity.y = 0;
+		
+		player.animations.play('hit', 5, false, true);
+		
+		display("Game Over!");
+	}
+	numLives--;
 }
 
-</script>
+function display(text)
+{
+	var topDiv = document.getElementById("topDiv");
+	
+		topDiv.innerHTML = "<p>" + text + "</p>";
+}
 
+function request(tag)
+{
+	var newString = "";
+	
+	if(tag.charAt(1) == '/')
+	{
+		newString = "What is the closing tag for " + tag;
+	}
+	else
+	{
+		newString = "What is the opening tag for " + tag;
+	}
+	
+	var bottomDiv = document.getElementById("bottomDiv");
+	
+		bottomDiv.innerHTML = "<p>" + newString + "</p>";
+}
+
+
+
+</script>
+<div id="midArea">
+<div id="topDiv">
+
+</div>
+
+<div id="midDiv">
+</div>
+
+
+<div id="bottomDiv">
+TEST TEXT
+</div>
+</div>
 </body>
 </html>
