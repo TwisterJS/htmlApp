@@ -59,9 +59,6 @@ app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
     }
   }
 
-
-
-
   function showPopup(q, index, questions) {
       $scope.popup.answer = '';
       $scope.popup.compare = q.answer;
@@ -77,11 +74,12 @@ app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
               questions[index].wrong = true;
           }
 
-
           $scope.popup = {};
-
-
       }
+
+  function clickOK() {
+    $scope.clickOK = true;
+  }
 
       var buttons = [
           { text: 'Cancel' },
