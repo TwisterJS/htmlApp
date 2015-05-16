@@ -39,37 +39,74 @@ $http.get('JSON/glossary.json')
 });
 
 app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
-$http.get('JSON/gameOne.json')
-  .success(function(data) {
-      this.gameQuestions = data;
-  }.bind(this))
-  .error(function(data) {
-      alert("FAILED TO GET");
-  });
 
-  $scope.showPopup = function () {
-      $scope.data = {}
+  function jsonSuccess(data) {
+    console.log(data);
+    $scope.questions = data;
+  }
+  function jsonError(data) {
+    alert("FAILED TO GET");
+  }
 
-      var myPopup = $ionicPopup.show({
-          template: '<input type="text">',
+
+
+  function onTap(e) {
+    console.log($scope);
+    if(!$scope.popup.answer) {
+        e.preventDefault();
+    } else {
+        return $scope.answer;
+    }
+  }
+
+
+
+
+  function showPopup(q, index, questions) {
+      $scope.popup.answer = '';
+      $scope.popup.compare = q.answer;
+
+      function checkAnswer(res) {
+          var answer = $scope.popup.answer;
+          var compare = $scope.popup.compare;
+
+          if(answer == compare){
+              questions[index].answered = true;
+              questions[index].wrong = false;
+          } else {
+              questions[index].wrong = true;
+          }
+
+
+          $scope.popup = {};
+
+
+      }
+
+      var buttons = [
+          { text: 'Cancel' },
+          { text: 'Submit',
+            type: 'button-positive',
+            onTap: onTap}
+        ];
+
+      var popupConfig = {
+          template: '<input type="text" ng-model="popup.answer">',
           title: 'Type in the missing tab.',
-          buttons: [
-              { text: 'Cancel' },
-              {
-                  text: 'Submit',
-                  type: 'button-positive',
-                  onTap: function(e) {
-                      if(e === data.answer) {
-                          console.log("Show the next question!");
-                      } else {
-                          console.log("Do not show the next question");
-                      }
-                  }
-              }
-          ]
-      });
-      myPopup.then(function(res) {
-          console.log(res);
-      });
+          scope: $scope,
+          buttons: buttons
+      };
+      var myPopup = $ionicPopup.show(popupConfig);
+      myPopup.then(checkAnswer);
+  };
+
+  $http
+    .get('JSON/gameOne.json')
+    .success(jsonSuccess)
+    .error(jsonError);
+
+  $scope.showPopup = showPopup;
+  $scope.popup = {
+      answer: ''
   };
 });
