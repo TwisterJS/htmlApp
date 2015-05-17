@@ -74,7 +74,7 @@ app.controller('gameOneCtrl',
       myPopup.then(function(res) {
         var theirAnswer = res;
         console.log(res);
-        console.log(this);
+        console.log($scope);
       })
   }
 
