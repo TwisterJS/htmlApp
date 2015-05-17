@@ -25,7 +25,6 @@ var numTargets = 40;
 var currentIteration = 0;
 var fontSize = 30;
 var differential = 1;
-var minWidth = 30;
 
 var tags = ["<HTML>", "</HTML>", "<HEAD>", "</HEAD>", "<BODY>", "</BODY>", "<P>", "</P>"];
 
@@ -110,9 +109,11 @@ function create()
 	makeTargets(getNum());
 	
 	//Make the GameOver screen
-	gameOver = game.add.sprite((w/2) - 237, -500, 'gameOver');
+	gameOver = game.add.sprite((w/2) - 237, -1000, 'gameOver');
 	gameOver.scale.x = differential;
 	gameOver.scale.y = differential;
+	gameOver.x = (w/2) - (gameOver/2);
+	gameOver.y = -10 - gameOver.height;
 	
 	//Listen for keypresses
 	cursors = game.input.keyboard.createCursorKeys();
