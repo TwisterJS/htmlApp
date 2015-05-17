@@ -24,6 +24,7 @@ var numTargets = 40;
 var currentIteration = 0;
 var fontSize = 30;
 var differential = 1;
+var minWidth = 30;
 
 var tags = ["<HTML>", "</HTML>", "<HEAD>", "</HEAD>", "<BODY>", "</BODY>", "<P>", "</P>"];
 
@@ -31,7 +32,7 @@ var tags = ["<HTML>", "</HTML>", "<HEAD>", "</HEAD>", "<BODY>", "</BODY>", "<P>"
 function preload()
 {
 	//Build differential
-	differential = 1 / (1920/w);
+	differential = 1 / (800/w);
 	
 	//Load the World
 	game.load.image('sky', 'img/sky_stars.png');
@@ -129,7 +130,7 @@ function update()
 	if(numLives > 0)
 	{	//Move!
 		//Touch:
-		 if (game.input.mousePointer.isDown)
+		 if (game.input.pointer1.isDown || game.input.mousePointer.isDown)
 		 {
 			 //  400 is the speed it will move towards the mouse
 			game.physics.arcade.moveToPointer(player, 400);
