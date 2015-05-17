@@ -3,7 +3,7 @@ var w = window.innerWidth;
 var h = window.innerHeight - 20;
 
 //Building Blocks
-var game = new Phaser.Game(w, h, Phaser.AUTO, 'midDiv', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(w, h, Phaser.CANVAS, 'midDiv', { preload: preload, create: create, update: update });
 var targets;
 var nonTargets;
 var platforms;
@@ -13,6 +13,7 @@ var player;
 var disp;
 var req;
 var topBar;
+var ua= navigator.userAgent;
 
 
 //Variables
@@ -133,7 +134,7 @@ function update()
 		 if (game.input.pointer1.isDown || game.input.mousePointer.isDown)
 		 {
 			 //  400 is the speed it will move towards the mouse
-			game.physics.arcade.moveToPointer(player, 400);
+			game.physics.arcade.moveToPointer(player, currentSpeed * 2);
 			
 			var rect = new Phaser.Rectangle(player.body.x - (player.body.width/2), player.body.y - (player.body.height/2), player.body.width * 1, player.body.width * 1);
 			
@@ -154,12 +155,12 @@ function update()
 		//Arrows:
 		if(cursors.left.isDown)
 		{
-			player.body.velocity.x = -50 - currentSpeed;
+			player.body.velocity.x = currentSpeed * -2;
 			player.animations.play('left');
 		}
 		else if(cursors.right.isDown)
 		{
-			player.body.velocity.x = 50 + currentSpeed;
+			player.body.velocity.x = currentSpeed * 2;
 			player.animations.play('right');
 		}
 		else
@@ -172,11 +173,11 @@ function update()
 		}
 		if(cursors.up.isDown)
 		{
-			player.body.velocity.y = -50 - currentSpeed;
+			player.body.velocity.y = currentSpeed * -2;
 		} 
 		else if(cursors.down.isDown)
 		{
-			player.body.velocity.y = 50 + currentSpeed;
+			player.body.velocity.y = currentSpeed * 2;
 		}
 		
 		
