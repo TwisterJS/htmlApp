@@ -1,3 +1,4 @@
+/* Empty. Add your own CSS if you like */
 body
 {
 	background-color: #000000;
@@ -18,4 +19,11 @@ body
 	left: 0;
 	right: 0;
 	margin: auto;
+
+/* Maintains the glossary page */
+.glossaryTabs {
+    color: #444;
+}
+.glossaryDefinition {
+    margin-top: 15px;
 }
