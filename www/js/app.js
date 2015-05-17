@@ -48,7 +48,7 @@ app.controller('gameOneCtrl',
       .error(function(data) {
           alert("FAILED TO GET");
     });
-  $scope.showPopup = function (question, index, gameQuestions) {
+  $scope.showPopup = function (item, index, gameQuestions) {
       $scope.data = {};
 
       var myPopup = $ionicPopup.show({
@@ -76,7 +76,7 @@ app.controller('gameOneCtrl',
         var answer = $scope.gameQuestions[index].answer;
         if(theirAnswer == answer) {
           console.log("Good job! Next question!");
-          question[index].answered = true;
+          gameQuestions[index].answered = true;
         } else {
           console.log("Oops, try again.");
         }
