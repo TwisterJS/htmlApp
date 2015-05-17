@@ -13,14 +13,3 @@
 	right: 0;
 	margin: auto;
 }
-
-.topDiv{
-	position: absolute;
-	top: 10%;
-	margin: auto;
-}
-
-.bottomDiv{
-	position: absolute;
-	bottom: 0;
-}
