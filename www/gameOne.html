@@ -29,25 +29,10 @@
       <ion-content>
         <div ng-controller="gameOneCtrl as gameCtrl">
           <div ng-repeat="question in gameQuestions">
+            <div ng-show="$first || question.answered">
             <p>{{question.question}}</p>
-            <button ng-click="showPopup()" class="button button-full button-light">{{question.button}}</button>
+            <button ng-click="showPopup(question, $index, gameQuestions)" class="button button-full button-light">{{question.button}}</button>
           </div>
-
-          <!-- <p>{{gameCtrl.gameQuestions[0].question}}</p>
-          <button class="button button-full button-light">{{gameCtrl.gameQuestions[0].button}}</button>
-
-          <p>{{gameCtrl.gameQuestions[1].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[1].button}}</button>
-
-          <p>{{gameCtrl.gameQuestions[2].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[2].button}}</button>
-
-          <p>{{gameCtrl.gameQuestions[3].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[3].button}}</button>
-
-          <p>{{gameCtrl.gameQuestions[4].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[4].button}}</button> -->
-
         </div>
       </ion-content>
     </ion-pane>
