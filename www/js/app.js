@@ -18,36 +18,36 @@ var app = angular.module('starter', ['ionic'])
   });
 })
 
-// app.controller('tabSetup', function($http) {
-// $http.get('JSON/buildingBlocks.json')
-//   .success(function(data) {
-//       this.tabMenu = data;
-//   }.bind(this))
-//   .error(function(data) {
-//       alert("FAILED TO GET");
-//   });
-// });
-//
-// app.controller('glossaryCtrl', function($http) {
-// $http.get('JSON/glossary.json')
-//   .success(function(data) {
-//       this.gList = data;
-//   }.bind(this))
-//   .error(function(data) {
-//       alert("FAILED TO GET");
-//   });
-// });
-
-app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
-$http.get('JSON/gameOne.json')
+app.controller('tabSetup', function($http) {
+$http.get('JSON/buildingBlocks.json')
   .success(function(data) {
-      $scope.gameQuestions = data;
-      console.log($scope);
-  })
+      this.tabMenu = data;
+  }.bind(this))
   .error(function(data) {
       alert("FAILED TO GET");
   });
-  console.log($scope);
+});
+
+app.controller('glossaryCtrl', function($http) {
+$http.get('JSON/glossary.json')
+  .success(function(data) {
+      this.gList = data;
+  }.bind(this))
+  .error(function(data) {
+      alert("FAILED TO GET");
+  });
+});
+
+
+app.controller('gameOneCtrl',
+  function getInfo($http, $ionicPopup, $scope) {
+    $http.get('JSON/gameOne.json')
+      .success(function(data) {
+          $scope.gameQuestions = data;
+      })
+      .error(function(data) {
+          alert("FAILED TO GET");
+    });
   $scope.showPopup = function () {
       $scope.data = {};
 
@@ -65,15 +65,14 @@ $http.get('JSON/gameOne.json')
                     if(!$scope.data.theirAnswer) {
                       e.preventDefault();
                     } else {
-                      console.log($scope.data.theirAnswer);
                       return $scope.data.theirAnswer;
                     }
                   }
               }
           ]
       });
-      myPopup.then(function(res, index, gameQuestions) {
-        $scope.theirAnswer = res;
+      myPopup.then(function(res) {
+        var theirAnswer = res;
         console.log(res);
         console.log(this);
       })
