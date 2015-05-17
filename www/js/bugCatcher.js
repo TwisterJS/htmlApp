@@ -116,6 +116,8 @@ function create()
 	cursors = game.input.keyboard.createCursorKeys();
 }
 
+
+
 /**This runs at each frame of the game**/
 function update()
 {
@@ -124,9 +126,27 @@ function update()
 	//set velocity to 0
 	player.body.velocity.x = 0;
 	
-	//Move!
+	
 	if(numLives > 0)
-	{
+	{	//Move!
+		//Touch:
+		 if (game.input.mousePointer.isDown)
+		 {
+			 //if(game.input.pointer1.x < player.x + 30 && game.input.pointer1.x > player.x - 30 && game.input.pointer1.y < player.y + 30 && game.input.pointer1.y > player.y - 30)
+			 {
+				 //  400 is the speed it will move towards the mouse
+				game.physics.arcade.moveToPointer(player, 400);
+
+				//  if it's overlapping the mouse, don't move any more
+				if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
+				{
+					player.body.velocity.setTo(0, 0);
+				}
+			 }
+		 }
+		
+		
+		//Arrows:
 		if(cursors.left.isDown)
 		{
 			player.body.velocity.x = -50 - currentSpeed;

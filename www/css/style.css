@@ -1,7 +1,13 @@
+body
+{
+	background-color: #000000;
+}
+
 .midArea{
 	position: absolute;
 	height: 100%;
 	text-align: center;
+	background-color: #000000;
 }
 
 .midDiv{
