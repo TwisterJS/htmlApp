@@ -46,6 +46,8 @@ $http.get('JSON/gameOne.json')
   .error(function(data) {
       alert("FAILED TO GET");
   });
+  console.log(this);
+  console.log(this.gameQuestions);
   $scope.showPopup = function () {
       $scope.data = {};
 
@@ -68,11 +70,10 @@ $http.get('JSON/gameOne.json')
               }
           ]
       });
-      myPopup.then(function(res, gameQuestions, $index) {
+      myPopup.then(function(res, index, gameQuestions) {
         var theirAnswer = res;
         console.log(res);
-        console.log(this.gameQuestions);
-        console.log($index);
+        console.log(this);
       })
   }
 
