@@ -18,37 +18,36 @@ var app = angular.module('starter', ['ionic'])
   });
 })
 
-app.controller('tabSetup', function($http) {
-$http.get('JSON/buildingBlocks.json')
-  .success(function(data) {
-      this.tabMenu = data;
-  }.bind(this))
-  .error(function(data) {
-      alert("FAILED TO GET");
-  });
-});
-
-app.controller('glossaryCtrl', function($http) {
-$http.get('JSON/glossary.json')
-  .success(function(data) {
-      this.gList = data;
-  }.bind(this))
-  .error(function(data) {
-      alert("FAILED TO GET");
-  });
-});
+// app.controller('tabSetup', function($http) {
+// $http.get('JSON/buildingBlocks.json')
+//   .success(function(data) {
+//       this.tabMenu = data;
+//   }.bind(this))
+//   .error(function(data) {
+//       alert("FAILED TO GET");
+//   });
+// });
+//
+// app.controller('glossaryCtrl', function($http) {
+// $http.get('JSON/glossary.json')
+//   .success(function(data) {
+//       this.gList = data;
+//   }.bind(this))
+//   .error(function(data) {
+//       alert("FAILED TO GET");
+//   });
+// });
 
 app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
 $http.get('JSON/gameOne.json')
   .success(function(data) {
-      this.gameQuestions = data;
-      console.log(this);
-  }.bind(this))
+      $scope.gameQuestions = data;
+      console.log($scope);
+  })
   .error(function(data) {
       alert("FAILED TO GET");
   });
-  console.log(this);
-  console.log(this.gameQuestions);
+  console.log($scope);
   $scope.showPopup = function () {
       $scope.data = {};
 
@@ -62,9 +61,11 @@ $http.get('JSON/gameOne.json')
                   text: 'Submit',
                   type: 'button-positive',
                   onTap: function(e) {
+                    console.log(e);
                     if(!$scope.data.theirAnswer) {
                       e.preventDefault();
                     } else {
+                      console.log($scope.data.theirAnswer);
                       return $scope.data.theirAnswer;
                     }
                   }
@@ -72,7 +73,7 @@ $http.get('JSON/gameOne.json')
           ]
       });
       myPopup.then(function(res, index, gameQuestions) {
-        var theirAnswer = res;
+        $scope.theirAnswer = res;
         console.log(res);
         console.log(this);
       })
