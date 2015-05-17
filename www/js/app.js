@@ -42,6 +42,7 @@ app.controller('gameOneCtrl', function($http, $ionicPopup, $scope) {
 $http.get('JSON/gameOne.json')
   .success(function(data) {
       this.gameQuestions = data;
+      console.log(this);
   }.bind(this))
   .error(function(data) {
       alert("FAILED TO GET");
