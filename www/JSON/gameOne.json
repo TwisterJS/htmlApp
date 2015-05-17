@@ -1,7 +1,8 @@
 [
     {
         "question": "Oh no! Bianca Bug has scrambled our instructions! Can you help us fix the HTML? Tell us which tags are missing below!",
-        "answer": "OK"
+        "answer": true,
+        "button": "OK"
     },
     {
         "question": "HELP!</h1>",
