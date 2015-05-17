@@ -29,7 +29,7 @@
       <ion-content>
         <div ng-controller="gameOneCtrl as gameCtrl">
           <div ng-repeat="question in gameQuestions">
-            <div ng-show="$first || question.answered">
+            <div ng-show="$first || question[$index-1].answered">
             <p>{{question.question}}</p>
             <button ng-click="showPopup(question, $index, gameQuestions)" class="button button-full button-light">{{question.button}}</button>
           </div>

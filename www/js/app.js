@@ -76,6 +76,7 @@ app.controller('gameOneCtrl',
         var answer = $scope.gameQuestions[index].answer;
         if(theirAnswer == answer) {
           console.log("Good job! Next question!");
+          question[index].answered = true;
         } else {
           console.log("Oops, try again.");
         }
