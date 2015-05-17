@@ -14,6 +14,7 @@ var stars;
 var badStars;
 var platforms;
 var ground;
+var gameOver;
 
 
 //Variables
@@ -21,6 +22,8 @@ var currentScore = 1;
 var numRounds = 5;
 var numLives = 3;
 var currentSpeed = 100;
+var numTargets = 40;
+var currentIteration = 0;
 
 var tags = ["&lt;HTML&gt;", "&lt;/HTML&gt;", "&lt;HEAD&gt;", "&lt;/HEAD&gt;", "&lt;BODY&gt;", "&lt;/BODY&gt;", "&lt;P&gt;", "&lt;/P&gt;"];
 
@@ -40,6 +43,9 @@ function preload()
 	game.load.image('img5', 'assets/body.png');
 	game.load.image('img6', 'assets/p.c.png');
 	game.load.image('img7', 'assets/p.png');
+	
+	//Load the "game Over" screen
+	game.load.image('gameOver', 'assets/GameOver.png');
 	
 	//Load the character
 	game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -86,6 +92,11 @@ function create()
 	
 	//Create the targets
 	makeStars(getNum());
+	
+	//Make the GameOver screen
+	gameOver = game.add.sprite(0, 0 - 500, 'gameOver');
+	
+	
 }
 
 /**This runs at each frame of the game**/
@@ -133,7 +144,7 @@ function update()
 	
 	//Control various events.
 	game.physics.arcade.overlap(player, stars, collectStar, null, this);
-	game.physics.arcade.overlap(ground, stars, collectStar, null, this);
+	game.physics.arcade.overlap(ground, stars, missedStar, null, this);
 	game.physics.arcade.overlap(player, badStars, dieNow, null, this);
 	
 }
@@ -176,9 +187,16 @@ function getNum()
 	return Math.round(Math.random() * 8);
 }
 
+function missedStar(ground, star)
+{
+	makeStars(currentIteration);
+}
+
 /**Makes the target and a specific number of non-targets**/
 function makeStars(tag)
 {
+	currentIteration = tag;
+	
 	//Make target in random location above screen
 	var goodStar = stars.create((Math.random() * 700) + 50, Math.random() * -5000, 'img' + tag);
 	
@@ -189,7 +207,7 @@ function makeStars(tag)
 	request(tags[tag]);
 	
 	//Make all the non-targets
-	for (var i = 0; i < 60; i++)
+	for (var i = 0; i < numTargets; i++)
 	{
 		//Get a random number and verify that it is not the target
 		var arrNum = 9;
@@ -240,6 +258,10 @@ function dieNow (player, star)
 		player.animations.play('hit', 5, false, true);
 		//Play game over
 		display("Game Over!");
+		
+		//Create the gameOver screen
+		var gOver = game.add.tween(gameOver).to({x:0,y:50},3000);
+		gOver.start();
 	}
 	numLives--;
 }
