@@ -88,7 +88,7 @@ function create()
 	game.physics.arcade.enable(player);
 	
 	//Give a little gravity
-	player.body.gravity.y = 200;
+	player.body.gravity.y = 0;
 	
 	//Keep player on the screen
 	player.body.collideWorldBounds = true;
@@ -123,8 +123,7 @@ function update()
 {
 	game.physics.arcade.collide(platforms, player);
 	
-	//set velocity to 0
-	player.body.velocity.x = 0;
+	
 	
 	
 	if(numLives > 0)
@@ -132,17 +131,20 @@ function update()
 		//Touch:
 		 if (game.input.mousePointer.isDown)
 		 {
-			 //if(game.input.pointer1.x < player.x + 30 && game.input.pointer1.x > player.x - 30 && game.input.pointer1.y < player.y + 30 && game.input.pointer1.y > player.y - 30)
-			 {
-				 //  400 is the speed it will move towards the mouse
-				game.physics.arcade.moveToPointer(player, 400);
+			 //  400 is the speed it will move towards the mouse
+			game.physics.arcade.moveToPointer(player, 400);
 
-				//  if it's overlapping the mouse, don't move any more
-				if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
-				{
-					player.body.velocity.setTo(0, 0);
-				}
-			 }
+			//  if it's overlapping the mouse, don't move any more
+			if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
+			{
+				player.body.velocity.setTo(0, 0);
+			}
+		 }
+		 else
+		 {
+			//set velocity to 0
+			player.body.velocity.x = 0;
+			player.body.velocity.y = 0;
 		 }
 		
 		
@@ -351,11 +353,11 @@ function request(tag)
 	var newString = "";
 	if(tag.charAt(1) == '/')
 	{
-		newString = "What is the opening tag for " + tag;
+		newString = "Catch the opening tag for " + tag;
 	}
 	else
 	{
-		newString = "What is the closing tag for " + tag;
+		newString = "Catch the closing tag for " + tag;
 	}
 	
 	req.destroy();
