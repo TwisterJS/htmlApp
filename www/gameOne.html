@@ -33,16 +33,16 @@
           <button class="button button-full button-light">{{gameCtrl.gameQuestions[0].answer}}</button>
 
           <p>{{gameCtrl.gameQuestions[1].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[1].button}}</button>
+          <button class="button button-full button-light" ng-click="showPopup($index)">{{gameCtrl.gameQuestions[1].button}}</button>
 
           <p>{{gameCtrl.gameQuestions[2].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[2].button}}</button>
+          <button class="button button-full button-light" ng-click="showPopup($index)">{{gameCtrl.gameQuestions[2].button}}</button>
 
           <p>{{gameCtrl.gameQuestions[3].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[3].button}}</button>
+          <button class="button button-full button-light" ng-click="showPopup($index)">{{gameCtrl.gameQuestions[3].button}}</button>
 
           <p>{{gameCtrl.gameQuestions[4].question}}</p>
-          <button class="button button-full button-light" ng-click="showPopup()">{{gameCtrl.gameQuestions[4].button}}</button>
+          <button class="button button-full button-light" ng-click="showPopup($index)">{{gameCtrl.gameQuestions[4].button}}</button>
 
         </div>
       </ion-content>

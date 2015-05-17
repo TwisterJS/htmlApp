@@ -50,7 +50,7 @@ $http.get('JSON/gameOne.json')
       $scope.data = {};
 
       var myPopup = $ionicPopup.show({
-          template: '<input type="text" ng-model="theirAnswer">',
+          template: '<input type="text" ng-model="data.theirAnswer">',
           title: 'Type in the missing tab.',
           scope: $scope,
           buttons: [
@@ -59,23 +59,20 @@ $http.get('JSON/gameOne.json')
                   text: 'Submit',
                   type: 'button-positive',
                   onTap: function(e) {
-                    if(e) {
-                      console.log(e);
+                    if(!$scope.data.theirAnswer) {
+                      e.preventDefault();
                     } else {
-                      console.log("else");
+                      return $scope.data.theirAnswer;
                     }
                   }
               }
           ]
       });
-      myPopup.then(function(res) {
+      myPopup.then(function(res, gameQuestions, $index) {
+        var theirAnswer = res;
         console.log(res);
-        console.log("see res above");
-        if(res) {
-          console.log("It works!");
-        } else {
-          console.log("It doesn't work.");
-        }
+        console.log(this.gameQuestions);
+        console.log($index);
       })
   }
 
