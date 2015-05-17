@@ -134,9 +134,11 @@ function update()
 		 {
 			 //  400 is the speed it will move towards the mouse
 			game.physics.arcade.moveToPointer(player, 400);
-
+			
+			var rect = new Phaser.Rectangle(player.body.x - (player.body.width/2), player.body.y - (player.body.height/2), player.body.width * 1, player.body.width * 1);
+			
 			//  if it's overlapping the mouse, don't move any more
-			if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
+			if (Phaser.Rectangle.contains(rect, game.input.x, game.input.y))
 			{
 				player.body.velocity.setTo(0, 0);
 			}
