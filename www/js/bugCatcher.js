@@ -57,7 +57,7 @@ function preload()
 	game.load.image('img7', 'img/p.png');
 	
 	//Load the "game Over" screen
-	game.load.image('gameOver', 'img/GameOver.png');
+	//game.load.image('gameOver', 'img/GameOver.png');
 	
 	//Load the character
 	game.load.spritesheet('dude', 'img/dude.png', 32, 48);
@@ -122,13 +122,13 @@ function create()
 	
 	makeTargets(getNum());
 	
-	//Make the GameOver screen
+	/*//Make the GameOver screen
 	gameOver = game.add.sprite((w/2) - 237, -1000, 'gameOver');
 	gameOver.scale.x = differential;
 	gameOver.scale.y = differential;
 	gameOver.x = (w/2) - (gameOver/2);
 	gameOver.y = -10 - gameOver.height;
-	
+	*/
 	//Listen for keypresses
 	cursors = game.input.keyboard.createCursorKeys();
 }
@@ -335,21 +335,28 @@ function dieNow (player, target)
 		player.body.gravity.x = 0;
 		player.body.gravity.y = 0;
 		
+		
+		
 		//Play dead animation
 		player.animations.stop();
 		player.animations.play('hit', 5, false, true);
 		//Play game over
-		display("Game Over!");
-		
-		//Create the gameOver screen
-		//Get x and y
-		/*var gOX = game.world.centerX - (gameOver.width / 2);
-		var gOY = game.world.centerY - (gameOver.height / 2);
-		var gOver = game.add.tween(gameOver).to({x:gOX,y:gOY},3000);
-		gOver.start();*/
+		display("");
+		request("");
+
+		var gOver = game.add.text(game.world.centerX, game.world.centerY, "GAME\nOVER");
+		gOver.anchor.set(0.5);
+		gOver.align = 'center';
+
+		//	Font style
+		gOver.font = 'Arial';
+		gOver.fontSize = fontSize * differential * 5;
+		gOver.fill = '#ff00ff';
+
 	}
 	
 }
+
 
 /**Change text of top bar**/
 function display(text)
@@ -368,26 +375,41 @@ function display(text)
 /**Change text of lower bar**/
 function request(tag)
 {
-	//Build the string using the tag
-	var newString = "";
-	if(tag.charAt(1) == '/')
+	if(tag.charAt(0) == '<')
 	{
-		newString = "Catch the opening tag for " + tag;
+		//Build the string using the tag
+		var newString = "";
+		if(tag.charAt(1) == '/')
+		{
+			newString = "Catch the opening tag for " + tag;
+		}
+		else
+		{
+			newString = "Catch the closing tag for " + tag;
+		}
+		
+		req.destroy();
+		req = game.add.text(game.world.centerX, game.world.height - fontSize * differential, newString);
+		req.anchor.set(0.5);
+		req.align = 'center';
+
+		//	Font style
+		req.font = 'Arial';
+		req.fontSize = fontSize * differential;
+		req.fill = '#ff00ff';
 	}
 	else
 	{
-		newString = "Catch the closing tag for " + tag;
-	}
-	
-	req.destroy();
-	req = game.add.text(game.world.centerX, game.world.height - fontSize * differential, newString);
-	req.anchor.set(0.5);
-    req.align = 'center';
+		req.destroy();
+		req = game.add.text(game.world.centerX, game.world.height - fontSize * differential, tag);
+		req.anchor.set(0.5);
+		req.align = 'center';
 
-    //	Font style
-    req.font = 'Arial';
-    req.fontSize = fontSize * differential;
-    req.fill = '#ff00ff';
+		//	Font style
+		req.font = 'Arial';
+		req.fontSize = fontSize * differential;
+		req.fill = '#ff00ff';
+	}
 }
 
 
