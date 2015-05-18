@@ -5,14 +5,14 @@
     },
     {
         "name": "WANTED: Bianca Bug",
-        "file_path": "/gameOne.html"
+        "file_path": "/htmlApp/www/gameOne.html"
     },
     {
         "name": "Bug Catcher",
-        "file_path": "/bugCatcher.html"
+        "file_path": "/htmlApp/www/bugCatcher.html"
     },
     {
         "name": "Glossary",
-        "file_path": "/glossary.html"
+        "file_path": "/htmlApp/www/glossary.html"
     }
 ]
