@@ -28,6 +28,7 @@
       </ion-header-bar>
       <ion-content>
         <div ng-controller="gameOneCtrl as gameCtrl">
+          <p>Oh no! Someone has scrambled our message! Can you help us fix the HTML?</p>
           <div ng-repeat="item in gameQuestions">
             <div ng-show="$first || gameQuestions[$index-1].answered">
             <p>{{item.question}}</p>
