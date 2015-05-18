@@ -1,4 +1,10 @@
 /* Empty. Add your own CSS if you like */
+
+body
+{
+	background-color: #000000;
+}
+
 .midArea{
 	position: absolute;
 	height: 100%;
@@ -15,13 +21,12 @@
 	margin: auto;
 }
 
-.topDiv{
-	position: absolute;
-	top: 10%;
-	margin: auto;
-}
 
-.bottomDiv{
-	position: absolute;
-	bottom: 0;
+/* Maintains the glossary page */
+
+.glossaryTabs {
+    color: #444;
+}
+.glossaryDefinition {
+    margin-top: 15px;
 }

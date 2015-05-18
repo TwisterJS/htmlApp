@@ -16,7 +16,7 @@ var app = angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
-})
+});
 
 app.controller('tabSetup', function($http) {
 $http.get('JSON/buildingBlocks.json')

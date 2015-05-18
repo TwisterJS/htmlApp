@@ -1,4 +1,5 @@
 [
+<<<<<<< HEAD
     {
         "question": "HELP!</h1>",
         "answer": "<h1>",
@@ -23,4 +24,5 @@
         "hint": "Did you forget your brackets?",
         "button": "I know the answer!"
     }
+
 ]

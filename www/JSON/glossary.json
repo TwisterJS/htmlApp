@@ -10,7 +10,7 @@
   {
     "name": "Browser",
     "definition": "A browser is what your computer uses to show you the internet."
-},
+  },
   {
     "name": "<div>",
     "definition": "The <div> tag is used for grouping sections of information and helping to format your HTML."
