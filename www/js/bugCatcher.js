@@ -3,7 +3,15 @@ var w = window.innerWidth;
 var h = window.innerHeight - 20;
 
 //Building Blocks
-var game = new Phaser.Game(w, h, Phaser.CANVAS, 'midDiv', { preload: preload, create: create, update: update });
+var game;
+if (isSafari)
+{
+	game = new Phaser.Game(w, h, Phaser.CANVAS, 'midDiv', { preload: preload, create: create, update: update });
+}
+else
+{
+	game = new Phaser.Game(w, h, Phaser.AUTO, 'midDiv', { preload: preload, create: create, update: update });
+}
 var targets;
 var nonTargets;
 var platforms;
@@ -21,7 +29,7 @@ var currentScore = 1;
 var numRounds = 5;
 var numLives = 3;
 var currentSpeed = 100;
-var numTargets = 40;
+var numTargets = 30;
 var currentIteration = 0;
 var fontSize = 30;
 var differential = 1;
@@ -106,6 +114,12 @@ function create()
 	nonTargets.enableBody = true;
 	
 	//Create the targets
+	var arrNum = 9;
+	while (arrNum <=0 || arrNum >= 7)
+	{
+		arrNum = getNum();
+	}
+	
 	makeTargets(getNum());
 	
 	//Make the GameOver screen
@@ -274,7 +288,7 @@ function makeTargets(tag)
 	{
 		//Get a random number and verify that it is not the target
 		var arrNum = 9;
-		while (arrNum <=0 || arrNum >= 8 || arrNum == tag)
+		while (arrNum <=0 || arrNum >= 7 || arrNum == tag)
 		{
 			arrNum = getNum();
 		}
@@ -329,10 +343,10 @@ function dieNow (player, target)
 		
 		//Create the gameOver screen
 		//Get x and y
-		var gOX = game.world.centerX - (gameOver.width / 2);
+		/*var gOX = game.world.centerX - (gameOver.width / 2);
 		var gOY = game.world.centerY - (gameOver.height / 2);
 		var gOver = game.add.tween(gameOver).to({x:gOX,y:gOY},3000);
-		gOver.start();
+		gOver.start();*/
 	}
 	
 }
@@ -374,4 +388,16 @@ function request(tag)
     req.font = 'Arial';
     req.fontSize = fontSize * differential;
     req.fill = '#ff00ff';
+}
+
+
+function isSafari()
+{
+	var browser = navigator.appVersion;
+	var device = navigator.platform;
+	
+	if(browser.indexOf("Safari") > -1 && device == "iPad")
+	{
+		return true;
+	}
 }
