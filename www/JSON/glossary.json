@@ -8,6 +8,10 @@
     "definition": "The <body> tag is what contains all of the HTML that the user actually sees."
   },
   {
+    "name": "Browser",
+    "definition": "A browser is what your computer uses to show you the internet."
+  },
+  {
     "name": "<div>",
     "definition": "The <div> tag is used for grouping sections of information and helping to format your HTML."
   },
@@ -42,6 +46,10 @@
   {
     "name": "<ol>",
     "definition": "The <ol> tag is used for an ordered list, meaning there will be numbers next to each item on your list."
+  },
+  {
+    "name": "Render",
+    "definition": "When a page is 'rendered' it means that the computer is done with what it needs to do with the page, and it is showing the finished product on your screen."
   },
   {
     "name": "<ul>",

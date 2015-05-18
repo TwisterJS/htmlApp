@@ -37,3 +37,50 @@ $http.get('JSON/glossary.json')
       alert("FAILED TO GET");
   });
 });
+
+
+app.controller('gameOneCtrl',
+  function getInfo($http, $ionicPopup, $scope) {
+    $http.get('JSON/gameOne.json')
+      .success(function(data) {
+          $scope.gameQuestions = data;
+      })
+      .error(function(data) {
+          alert("FAILED TO GET");
+    });
+  $scope.showPopup = function (item, index, gameQuestions) {
+      $scope.data = {};
+
+      var myPopup = $ionicPopup.show({
+          template: '<input type="text" ng-model="data.theirAnswer">',
+          title: 'Type in the missing tab.',
+          scope: $scope,
+          buttons: [
+              { text: 'Cancel' },
+              {
+                  text: 'Submit',
+                  type: 'button-positive',
+                  onTap: function(e) {
+                    console.log(e);
+                    if(!$scope.data.theirAnswer) {
+                      e.preventDefault();
+                    } else {
+                      return $scope.data.theirAnswer;
+                    }
+                  }
+              }
+          ]
+      });
+      myPopup.then(function(res) {
+        var theirAnswer = res;
+        var answer = $scope.gameQuestions[index].answer;
+        if(theirAnswer == answer) {
+          console.log("Good job! Next question!");
+          gameQuestions[index].answered = true;
+        } else {
+          console.log("Oops, try again.");
+        }
+      })
+  }
+
+});
