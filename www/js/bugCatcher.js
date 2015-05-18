@@ -3,7 +3,7 @@ var w = window.innerWidth;
 var h = window.innerHeight - 20;
 
 //Building Blocks
-var game = new Phaser.Game(w, h, Phaser.AUTO, 'midDiv', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(w, h, Phaser.CANVAS, 'midDiv', { preload: preload, create: create, update: update });
 var targets;
 var nonTargets;
 var platforms;
@@ -13,6 +13,7 @@ var player;
 var disp;
 var req;
 var topBar;
+var ua= navigator.userAgent;
 
 
 //Variables
@@ -31,7 +32,7 @@ var tags = ["<HTML>", "</HTML>", "<HEAD>", "</HEAD>", "<BODY>", "</BODY>", "<P>"
 function preload()
 {
 	//Build differential
-	differential = 1 / (1920/w);
+	differential = 1 / (800/w);
 	
 	//Load the World
 	game.load.image('sky', 'img/sky_stars.png');
@@ -88,7 +89,7 @@ function create()
 	game.physics.arcade.enable(player);
 	
 	//Give a little gravity
-	player.body.gravity.y = 200;
+	player.body.gravity.y = 0;
 	
 	//Keep player on the screen
 	player.body.collideWorldBounds = true;
@@ -108,9 +109,11 @@ function create()
 	makeTargets(getNum());
 	
 	//Make the GameOver screen
-	gameOver = game.add.sprite((w/2) - 237, -500, 'gameOver');
+	gameOver = game.add.sprite((w/2) - 237, -1000, 'gameOver');
 	gameOver.scale.x = differential;
 	gameOver.scale.y = differential;
+	gameOver.x = (w/2) - (gameOver/2);
+	gameOver.y = -10 - gameOver.height;
 	
 	//Listen for keypresses
 	cursors = game.input.keyboard.createCursorKeys();
@@ -123,38 +126,42 @@ function update()
 {
 	game.physics.arcade.collide(platforms, player);
 	
-	//set velocity to 0
-	player.body.velocity.x = 0;
+	
 	
 	
 	if(numLives > 0)
 	{	//Move!
 		//Touch:
-		 if (game.input.mousePointer.isDown)
+		 if (game.input.pointer1.isDown || game.input.mousePointer.isDown)
 		 {
-			 //if(game.input.pointer1.x < player.x + 30 && game.input.pointer1.x > player.x - 30 && game.input.pointer1.y < player.y + 30 && game.input.pointer1.y > player.y - 30)
-			 {
-				 //  400 is the speed it will move towards the mouse
-				game.physics.arcade.moveToPointer(player, 400);
-
-				//  if it's overlapping the mouse, don't move any more
-				if (Phaser.Rectangle.contains(player.body, game.input.x, game.input.y))
-				{
-					player.body.velocity.setTo(0, 0);
-				}
-			 }
+			 //  400 is the speed it will move towards the mouse
+			game.physics.arcade.moveToPointer(player, currentSpeed * 2);
+			
+			var rect = new Phaser.Rectangle(player.body.x - (player.body.width/2), player.body.y - (player.body.height/2), player.body.width * 1, player.body.width * 1);
+			
+			//  if it's overlapping the mouse, don't move any more
+			if (Phaser.Rectangle.contains(rect, game.input.x, game.input.y))
+			{
+				player.body.velocity.setTo(0, 0);
+			}
+		 }
+		 else
+		 {
+			//set velocity to 0
+			player.body.velocity.x = 0;
+			player.body.velocity.y = 0;
 		 }
 		
 		
 		//Arrows:
 		if(cursors.left.isDown)
 		{
-			player.body.velocity.x = -50 - currentSpeed;
+			player.body.velocity.x = currentSpeed * -2;
 			player.animations.play('left');
 		}
 		else if(cursors.right.isDown)
 		{
-			player.body.velocity.x = 50 + currentSpeed;
+			player.body.velocity.x = currentSpeed * 2;
 			player.animations.play('right');
 		}
 		else
@@ -167,11 +174,11 @@ function update()
 		}
 		if(cursors.up.isDown)
 		{
-			player.body.velocity.y = -50 - currentSpeed;
+			player.body.velocity.y = currentSpeed * -2;
 		} 
 		else if(cursors.down.isDown)
 		{
-			player.body.velocity.y = 50 + currentSpeed;
+			player.body.velocity.y = currentSpeed * 2;
 		}
 		
 		
@@ -351,11 +358,11 @@ function request(tag)
 	var newString = "";
 	if(tag.charAt(1) == '/')
 	{
-		newString = "What is the opening tag for " + tag;
+		newString = "Catch the opening tag for " + tag;
 	}
 	else
 	{
-		newString = "What is the closing tag for " + tag;
+		newString = "Catch the closing tag for " + tag;
 	}
 	
 	req.destroy();

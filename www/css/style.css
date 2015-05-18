@@ -1,8 +1,13 @@
 /* Empty. Add your own CSS if you like */
 
-body
+.bcBody
 {
 	background-color: #000000;
+}
+
+.pane
+{
+	overflow: hidden;
 }
 
 .midArea{
