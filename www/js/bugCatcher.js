@@ -22,6 +22,7 @@ var disp;
 var req;
 var topBar;
 var ua= navigator.userAgent;
+var centerText;
 
 
 //Variables
@@ -33,8 +34,19 @@ var numTargets = 30;
 var currentIteration = 0;
 var fontSize = 30;
 var differential = 1;
+var started = false;
+var ended = false;
+var instructionPage = 0;
+var iteration = 0;
 
-var tags = ["<HTML>", "</HTML>", "<HEAD>", "</HEAD>", "<BODY>", "</BODY>", "<P>", "</P>"];
+var tags = [ "</HEAD>", "<P>", "</LI>", "<IMG", "</H2>", "<H2>", "<LI>", "<HTML>", "</HTML>", "<HEAD>", "<BODY>", "</BODY>", "</P>"];
+var _head = "<HEAD><TITLE>My Hiding Place</TITLE>";
+var _p = "Mars is too cold this time of year.</P>";
+var _li = "<LI>Needs to be cloudy";
+var _img = "src=\"images/lairPhoto.png\">";
+var _h2 = "<H2>Lair Sweet Lair";
+
+var tagDesc = [_head, _p, _li, _img, _h2];
 
 /**Loads all of the parts of the game**/
 function preload()
@@ -47,17 +59,20 @@ function preload()
 	game.load.image('ground', 'img/platform.png');
 	
 	//Load the targets
-	game.load.image('img0', 'img/html.c.png');
-	game.load.image('img1', 'img/html.png');
-	game.load.image('img2', 'img/head.c.png');
-	game.load.image('img3', 'img/head.png');
-	game.load.image('img4', 'img/body.c.png');
-	game.load.image('img5', 'img/body.png');
-	game.load.image('img6', 'img/p.c.png');
-	game.load.image('img7', 'img/p.png');
+	game.load.image('img0', 'img/head.c.png');
+	game.load.image('img1', 'img/p.png');
+	game.load.image('img2', 'img/li.c.png');
+	game.load.image('img3', 'img/img.png');
+	game.load.image('img4', 'img/h2.c.png');
+	game.load.image('img5', 'img/h2.png');
+	game.load.image('img6', 'img/li.png');
+	game.load.image('img7', 'img/html.png');
+	game.load.image('img8', 'img/html.c.png');
+	game.load.image('img9', 'img/head.png');
+	game.load.image('img10', 'img/body.png');
+	game.load.image('img11', 'img/body.c.png');
+	game.load.image('img12', 'img/p.c.png');
 	
-	//Load the "game Over" screen
-	//game.load.image('gameOver', 'img/GameOver.png');
 	
 	//Load the character
 	game.load.spritesheet('dude', 'img/dude.png', 32, 48);
@@ -67,6 +82,34 @@ function preload()
 	req = game.add.text(game.world.centerX, game.world.height - fontSize,"");
 }
 
+function showInstructions()
+{
+	var instructions1 = "We need your help\nto catch Bianca Bug!";
+	var instructions2 = "She has left behind peices\nof an HTML page that describes\nher whereabouts, but\nthe tags are broken!"
+	var instructions3 = "Can you collect and fix\nall the pieces of broken code?"
+	var instructions4 = "You'll need to complete the\nHTML tags so that we\ncan read the page!"
+	var instructionList = [instructions1, instructions2, instructions3, instructions4];
+	
+	if(instructionPage < 4)
+	{
+		display("");
+		request("");
+		writeCenter(instructionList[instructionPage], 1, null);
+		instructionPage++;
+		game.paused = true;
+	}
+	else
+	{
+		writeCenter("", 1, null);
+		started = true;
+		//Add the background
+		var sky = game.add.sprite( 0, 0, 'sky');
+		sky.scale.x = (w/sky.width);
+		sky.scale.y = (h/sky.height);
+		game.world.sendToBack(sky);
+		makeTargets(iteration++);
+	}
+}
 
 /**Create the game**/
 function create()
@@ -74,10 +117,8 @@ function create()
 	//Load Phaser
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-	//Add the background
-	var sky = game.add.sprite( 0, 0, 'sky');
-	sky.scale.x = (w/sky.width);
-	sky.scale.y = (h/sky.height);
+	//UnPause (if needed)
+	game.input.onDown.add(unpause, self);
 	
 	//Add a platform group and a ground. Useful for event handling
 	platforms = game.add.group();
@@ -114,21 +155,14 @@ function create()
 	nonTargets.enableBody = true;
 	
 	//Create the targets
-	var arrNum = 9;
-	while (arrNum <=0 || arrNum >= 7)
+	var arrNum = tags.length;
+	while (arrNum < 0 || arrNum >= tags.length)
 	{
 		arrNum = getNum();
 	}
 	
-	makeTargets(getNum());
+	centerText = game.add.text(game.world.centerX, game.world.centerY,"");
 	
-	/*//Make the GameOver screen
-	gameOver = game.add.sprite((w/2) - 237, -1000, 'gameOver');
-	gameOver.scale.x = differential;
-	gameOver.scale.y = differential;
-	gameOver.x = (w/2) - (gameOver/2);
-	gameOver.y = -10 - gameOver.height;
-	*/
 	//Listen for keypresses
 	cursors = game.input.keyboard.createCursorKeys();
 }
@@ -140,11 +174,20 @@ function update()
 {
 	game.physics.arcade.collide(platforms, player);
 	
+	if(ended && !player.animations.getAnimation('hit').isPlaying)
+	{
+		game.paused = true;
+	}
 	
+	if(!started)
+	{
+		showInstructions();
+	}
 	
 	
 	if(numLives > 0)
-	{	//Move!
+	{	
+		//Move!
 		//Touch:
 		 if (game.input.pointer1.isDown || game.input.mousePointer.isDown)
 		 {
@@ -238,7 +281,7 @@ function collectTarget (player, target)
 		currentSpeed += 50;
 		
 		//Make the targets
-		makeTargets(getNum());
+		makeTargets(iteration++);
 		
 		//Add a life
 		numLives++;
@@ -254,13 +297,13 @@ function collectTarget (player, target)
 /**Gets a whole number between 0 and 8**/
 function getNum()
 {
-	return Math.round(Math.random() * 8);
+	return Math.round(Math.random() * tags.length) - 1;
 }
 
 function missedTarget(ground, target)
 {
 	target.kill();
-	makeTargets(currentIteration);
+	makeTargets(iteration);
 }
 
 function missedNonTarget(ground, target)
@@ -271,7 +314,6 @@ function missedNonTarget(ground, target)
 /**Makes the target and a specific number of non-targets**/
 function makeTargets(tag)
 {
-	currentIteration = tag;
 	
 	//Make target in random location above screen
 	var goodTarget = targets.create((Math.random() * (w-100)) + 50, Math.random() * (-10 * h), 'img' + tag);
@@ -281,14 +323,14 @@ function makeTargets(tag)
 	goodTarget.body.velocity.y = currentSpeed;
 	
 	//Print the request to catch the target
-	request(tags[tag]);
+	request(tagDesc[tag]);
 	
 	//Make all the non-targets
 	for (var i = 0; i < numTargets; i++)
 	{
 		//Get a random number and verify that it is not the target
-		var arrNum = 9;
-		while (arrNum <=0 || arrNum >= 7 || arrNum == tag)
+		var arrNum = tags.length;
+		while (arrNum <=0 || arrNum >= tags.length || arrNum == tag)
 		{
 			arrNum = getNum();
 		}
@@ -344,19 +386,16 @@ function dieNow (player, target)
 		display("");
 		request("");
 
-		var gOver = game.add.text(game.world.centerX, game.world.centerY, "GAME\nOVER");
-		gOver.anchor.set(0.5);
-		gOver.align = 'center';
-
-		//	Font style
-		gOver.font = 'Arial';
-		gOver.fontSize = fontSize * differential * 5;
-		gOver.fill = '#ff00ff';
-
+		writeCenter("GAME\nOVER", 5, returnToIndex())
+		ended = true;
 	}
 	
 }
 
+function returnToIndex()
+{
+	
+}
 
 /**Change text of top bar**/
 function display(text)
@@ -375,43 +414,36 @@ function display(text)
 /**Change text of lower bar**/
 function request(tag)
 {
-	if(tag.charAt(0) == '<')
-	{
-		//Build the string using the tag
-		var newString = "";
-		if(tag.charAt(1) == '/')
-		{
-			newString = "Catch the opening tag for " + tag;
-		}
-		else
-		{
-			newString = "Catch the closing tag for " + tag;
-		}
-		
-		req.destroy();
-		req = game.add.text(game.world.centerX, game.world.height - fontSize * differential, newString);
-		req.anchor.set(0.5);
-		req.align = 'center';
+	req.destroy();
+	req = game.add.text(game.world.centerX, game.world.height - fontSize * differential, tag);
+	req.anchor.set(0.5);
+	req.align = 'center';
 
-		//	Font style
-		req.font = 'Arial';
-		req.fontSize = fontSize * differential;
-		req.fill = '#ff00ff';
-	}
-	else
-	{
-		req.destroy();
-		req = game.add.text(game.world.centerX, game.world.height - fontSize * differential, tag);
-		req.anchor.set(0.5);
-		req.align = 'center';
-
-		//	Font style
-		req.font = 'Arial';
-		req.fontSize = fontSize * differential;
-		req.fill = '#ff00ff';
-	}
+	//	Font style
+	req.font = 'Arial';
+	req.fontSize = fontSize * differential;
+	req.fill = '#ff00ff';
 }
 
+function writeCenter(text, emDiff, onComplete)
+{
+	centerText.destroy();
+	centerText = game.add.text(game.world.centerX, game.world.centerY, text);
+	centerText.anchor.set(0.5);
+	centerText.align = 'center';
+
+	//	Font style
+	centerText.font = 'Arial';
+	centerText.fontSize = fontSize * differential * emDiff;
+	centerText.fill = '#ff00ff';
+	
+	onComplete;
+}
+
+function unpause(event)
+{
+	game.paused = false;
+}
 
 function isSafari()
 {
